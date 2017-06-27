@@ -11,27 +11,13 @@ def get_character_from_api_by_url(character, url)
 
   while found_character == nil
     url = character_hash["next"]
-    if url != null
+    if url != nil
       found_character = get_character_from_api_by_url(character, url)
     end
   end
 
   found_character
 end
-
-=begin
-def cycle_page(character)
-entry_character = nil
-found_character = entry_character
-while found_character == nil
-  found_character = character
-  url = character_hash["next"]
-  found_character = get_character_from_api_by_url(character, url)
-end
-found_character
-end
-=end
-
 
 def get_character_movies_from_api(character)
   url = 'http://www.swapi.co/api/people/'
@@ -72,45 +58,11 @@ def show_movie_crawl(movie)
 
   found_movie = movies_hash["results"].find {|movie_data| movie_data["title"] == movie }
 
-  system('clear')
-  star_wars_logo
-  sleep(2)
+  lines = []
+
   found_movie["opening_crawl"].split("\r\n").each do |line|
-    puts "          " + line
-    sleep(1)
+    lines << "        " + line
   end
+
+  screen_draw(lines)
 end
-
-
-
-
-
-
-
-
-
-
-def star_wars_logo
- puts "\r\n
-     ________________.  ___     .______
-    /                | /   \\    |   _  \\
-   |   (-----|  |----`/  ^  \\   |  |_)  |
-     \\   \\   |  |    /  /_\\  \\  |      /
-.-----)   |  |  |   /  _____  \\ |  |\\  \\-------.
-|________/   |__|  /__/     \\__\\| _| `.________|
-____    __    ____  ___     .______    ________.
-\\   \\  /  \\  /   / /   \\    |   _  \\  /        |
- \\   \\/    \\/   / /  ^  \\   |  |_)  ||   (-----`
-  \\            / /  /_\\  \\  |      /  \\   \\
-   \\    /\\    / /  _____  \\ |  |\\  \\---)   |
-    \\__/  \\__/ /__/     \\__\\|__| `._______/"
-    puts ""
-    puts ""
-    puts ""
-end
-
-
-## BONUS
-
-# that `get_character_movies_from_api` method is probably pretty long. Does it do more than one job?
-# can you split it up into helper methods?
